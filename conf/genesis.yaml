@@ -1,0 +1,58 @@
+chain_id: 1
+first_account: "GT1zsSkNThJ8yAMcFThFKWmnakg9ZrgMmLXrh"
+super_nodes:
+  - address: "GT1zn2Cf7LdpDB14GboLtLxTeeFvVuQz8czNj"
+    value: "0"
+  - address: "GT1zqviEZ73vf8zStjwXqsLHKcSadN57XJrRK"
+    value: "0"
+  - address: "GT1zqunPPw9WWRaMg3ibhXQYv8TXbEufAggqM"
+    value: "0"
+  - address: "GT1zeRL72ghxFF7CnBCtXhb975DkDTFJgrnHw"
+    value: "0"
+  - address: "GT1zgUtNk8eMW7oarqu4mx9oXcvJr5ZNbsPLy"
+    value: "0"
+  - address: "GT1zbgTCMNw4otnXyn2Eq1g6vfQ2oJbMsS9hu"
+    value: "0"
+  - address: "GT1zfjK21ppVhASEL6dWxdRTxEQ7MC3mr5UJn"
+    value: "0"
+
+
+genesis_funds:
+  - address: "GT1zrUU69tuBTkarKaVkN4itXye996QYSJzif"
+    value: "43000000000000000"
+  - address: "GT1zV8hxtoWsKyVWr2NtGBof64BKCy4Lw3xnZ"
+    value: "8600000000000000"
+  - address: "GT1zkvngUVhqoaxpWJg5cRJKhr2aSrMVdVtJu"
+    value: "88268800300000000"
+
+engine_factors:
+  block_interval: 10000
+  super_node_count: 7
+  witness_count: 7
+  floating_cycle: 1
+  per_contract_tx_fee: 100000
+  deploy_contract_min_volume: 1000
+  min_pledge: "500000000000000"
+
+genesis_council:
+  - address: "GT1zn2Cf7LdpDB14GboLtLxTeeFvVuQz8czNj"
+    peer_id: "12D3KooWL5XFfbGYjic8AEMURp1j1AGkyL21LKkccP58yGhTBrUz"
+    pledge_fund: "0"
+  - address: "GT1zqviEZ73vf8zStjwXqsLHKcSadN57XJrRK"
+    peer_id: "12D3KooWHf29EUugKHggKGZKd2sGzL6BTYHDwfbkVyiXCxmS57B5"
+    pledge_fund: "0"
+  - address: "GT1zqunPPw9WWRaMg3ibhXQYv8TXbEufAggqM"
+    peer_id: "12D3KooWBA3amNApCEjJDuQpi81zcD7xKsGkpgae3zLYw4nmhTpk"
+    pledge_fund: "0"
+  - address: "GT1zeRL72ghxFF7CnBCtXhb975DkDTFJgrnHw"
+    peer_id: "12D3KooWSoCK2UsfDD1M5jzHqAFzD98bVYL2HFVemX5EY1tK3E1G"
+    pledge_fund: "0"
+  - address: "GT1zgUtNk8eMW7oarqu4mx9oXcvJr5ZNbsPLy"
+    peer_id: "12D3KooWGQUK86EyJR95NSeJ2tGLokxTNtbwgPRv3sbvgSsjj9jX"
+    pledge_fund: "0"
+  - address: "GT1zbgTCMNw4otnXyn2Eq1g6vfQ2oJbMsS9hu"
+    peer_id: "12D3KooWG3hEpv3A9cUVugHfNRXLuP119TL1DFvUf2tRUjpR47EP"
+    pledge_fund: "0"
+  - address: "GT1zfjK21ppVhASEL6dWxdRTxEQ7MC3mr5UJn"
+    peer_id: "12D3KooWQcLtkirHig2tNxkpBz4JmuLpvpCprFTQtJX69VQWB1X7"
+    pledge_fund: "0"

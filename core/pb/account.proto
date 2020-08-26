@@ -1,0 +1,72 @@
+// Copyright (C) 2018 go-gt authors
+//
+// This file is part of the go-gt library.
+//
+// the go-gt library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// the go-gt library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with the go-gt library.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+syntax = "proto3";
+
+package corepb;
+
+message ContractAuthority{
+    bytes address = 1;
+    string method = 2;
+    string access_type = 3;
+}
+
+message Permission{
+    string auth_category = 1;
+    repeated bytes auth_message = 2;
+}
+
+message Contract {
+    bytes address = 1;
+    repeated string methods = 2;
+    string version = 3;
+}
+
+message Account{
+    bytes    address = 1;
+    bytes    balance = 2;
+    bytes    frozen_fund = 3;
+    bytes    pledge_fund = 4;
+    uint64   nonce = 5;
+    bytes    vars_hash = 6;
+    bytes    credit_index = 7;
+    int32    state = 8;
+    bytes    created_transaction = 9;
+    string   contract_version = 10;
+    repeated Permission permissions = 11;
+    repeated CreditIntegral integral = 12;
+    repeated ContractIntegral hold_contract =13;
+    uint64   tx_count = 14;
+    bytes    txs_hash = 15;
+    uint64   evil = 16;
+}
+
+message ContractIntegral {
+    string address = 1;
+    uint64 created_height = 2;
+    bytes  contract_tx_count = 3;
+}
+
+message CreditIntegral {
+    uint64 term_id  = 1;
+    uint64 normal   = 2;
+    uint64 contract = 3;
+    uint64 template = 4;
+    uint64 do_evil  = 5;
+    uint64 collect_block = 6;
+}

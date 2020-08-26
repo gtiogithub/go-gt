@@ -1,0 +1,156 @@
+// Copyright (C) 2018 go-gt authors
+//
+// This file is part of the go-gt library.
+//
+// the go-gt library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// the go-gt library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with the go-gt library.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+syntax = "proto3";
+import "gt.pro/gtio/go-gt/dag/pb/dag.proto";
+package corepb;
+
+message Data {
+    string type = 1;
+    bytes msg = 2;
+}
+
+message File {
+    string name = 1;
+    bytes content = 2;
+    string bind_key = 3;
+    uint64 size = 4;
+    StorageState state = 5;
+}
+
+message StorageState {
+    string mode = 1;
+    bytes result = 2;
+    bytes extra_data = 3;
+}
+
+message ComplexData {
+    repeated File flies = 1;
+    Data data = 2;
+}
+
+message Signature {
+    bytes signer = 1;
+    bytes data = 2;
+}
+
+message Transaction {
+    bytes hash = 1;
+    bytes from = 2;
+    bytes to = 3;
+    bytes value = 4;
+    uint64 nonce = 5;
+    uint32 chain_id = 6;
+    int64 timestamp = 7;
+    Data data = 8;
+    uint32 priority = 9;
+    bytes gas_limit = 10;
+
+    Signature sign = 11;
+    bytes memo = 12;
+}
+
+message PsecData {
+    int64 term = 1;
+    int64 timestamp = 2;
+}
+
+message BlockHeader {
+    bytes hash = 1;
+    bytes parent_hash = 2;
+    bytes coinbase = 3;
+    int64 timestamp = 4;
+    uint32 chain_id = 5;
+    uint64 height = 6;
+    uint64 term_id = 7;
+    bytes state_root = 8;
+    bytes txs_root = 9;
+    bytes events_root = 10;
+    bytes consensus_root = 11;
+    BlockMemo memo = 12;
+    bytes output = 13;
+    Signature sign = 14;
+    Random random = 15;
+}
+
+
+message BlockMemo {
+    repeated BlockFundEntity rewards = 1;
+    repeated BlockFundEntity pledge = 2;
+}
+
+message BlockFundEntity {
+    bytes    address = 1;
+    bytes    balance = 2;
+    bytes    frozen_fund = 3;
+    bytes    pledge_fund = 4;
+}
+
+message Block {
+    bytes hash = 1;
+    BlockHeader header = 2;
+    repeated Transaction body = 3;
+    dagpb.Dag dependency = 4;
+}
+
+message DownloadBlock {
+    bytes hash = 1;
+    Signature sign = 2;
+}
+
+message Promise {
+    uint64 proposal_id = 1;
+    Propose max_accepted_propose = 2;
+    Signature sign = 3;
+}
+
+message Propose {
+    uint64 num = 1;
+    bytes value = 2;
+    Signature sign = 3;
+}
+
+message PbftMsg {
+    uint32 type = 1;
+    string view_id = 2;
+    uint64 seq_id = 3;
+    int64  timestamp = 4;
+    bytes  data = 5;
+    Signature sign = 6;
+}
+
+message SystemConfig {
+    int32 block_interval = 1;
+    int32 super_node_count = 2;
+    int32 witness_count = 3;
+    repeated Node super_nodes =4;
+    bytes contract_tx_fee = 5;
+    int32 deploy_contract_min_volume = 6;
+    int32 floating_cycle = 7;
+    bytes min_pledge = 8;
+}
+
+message Node {
+    string address = 1;
+    bytes fund = 2;
+}
+
+message Random {
+    bytes vrf_seed = 1;
+    bytes vrf_proof = 2;
+}

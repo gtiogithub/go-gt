@@ -1,0 +1,29 @@
+network:
+  listen:
+    - "127.0.0.1:8880"
+  private_key: "conf/network/key"
+  network_id: 1
+  stream_limits:
+  reserved_stream_limits:
+chain:
+  #datadir: "data"
+  keydir: "keystore"
+  chain_id: 1
+  coinbase: ""
+  genesis: "conf/genesis.yaml"
+log:
+  log_level: "info"
+  log_file: "logs"
+  log_rotationTime: 3600
+  log_age: 86400
+rpc:
+  rpc_listen:
+    - "127.0.0.1:8518"
+  http_listen:
+    - "127.0.0.1:8519"
+  http_module:
+    - "api"
+    - "admin"
+  http_cors:
+    - "*"
+  http_limits: 128

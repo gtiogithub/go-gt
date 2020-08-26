@@ -1,0 +1,457 @@
+// Copyright (C) 2018 go-gt authors
+//
+// This file is part of the go-gt library.
+//
+// the go-gt library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// the go-gt library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with the go-gt library.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+//The protobuf golang code is generated with protoc-gen-gogo v1.0.0
+
+syntax = "proto3";
+
+package rpcpb;
+
+import "rpc.proto";
+import "google/api/annotations.proto";
+
+service ApiService {
+    // Return the state of the neb.
+    rpc GetChainState (NonParamsRequest) returns (GetChainStateResponse) {
+        option (google.api.http) = {
+            get: "/v1/api/chainstate"
+        };
+    }
+
+    // get account info by address
+    rpc GetAccount (Address) returns (AccountInfo) {
+        option (google.api.http) = {
+            post: "/v1/api/account/info"
+            body:"*"
+        };
+    }
+
+    // Call is the RPC API handler.
+    rpc CallTransaction (TransactionRequest) returns (CallResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/CallTransaction"
+            body:"*"
+        };
+    }
+
+    // EstimateGas
+    rpc EstimateGas(TransactionRequest) returns (GasResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/estimateGas"
+            body: "*"
+        };
+    }
+
+    // Submit the signed transaction.
+    rpc SendRawTransaction (SendRawTransactionRequest) returns (TransactionHash) {
+        option (google.api.http) = {
+            post: "/v1/api/rawtransaction"
+            body: "*"
+        };
+    }
+
+    // get block by hash
+    rpc GetBlockByHash (BlockHashAndFull) returns (BlockResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/block/hash"
+            body:"*"
+        };
+    }
+
+    // get best block by height
+    rpc GetBestBlockByHeight (BlockHeightAndFull) returns (BlockResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/block/GetBestBlockByHeight"
+            body:"*"
+        };
+    }
+
+    //return transaction
+    rpc GetTransactionByHash (TransactionHash) returns (TransactionReceipt) {
+        option (google.api.http) = {
+            post: "/v1/api/getTransactionByHash"
+            body: "*"
+        };
+    }
+
+    rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/getTransactions"
+            body: "*"
+        };
+    }
+    //return transaction
+    rpc GetTransactionByContractAddress (ContractAddressRequest) returns (TransactionReceipt) {
+        option (google.api.http) = {
+            post: "/v1/api/getTransactionByContractAddress"
+            body: "*"
+        };
+    }
+
+    // get best block hash
+    rpc GetBestBlockHash (NonParamsRequest) returns (BlockHash) {
+        option (google.api.http) = {
+            get: "/v1/api/block/bestHash"
+        };
+    }
+
+    // get max block height
+    rpc GetMaxHeight (NonParamsRequest) returns (BlockHeight) {
+        option (google.api.http) = {
+            get: "/v1/api/block/maxHeight"
+        };
+    }
+
+    //return balance
+    rpc GetAsset (Address) returns (AssetResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/asset"
+            body: "*"
+        };
+    }
+
+    // Return active count of the node
+    rpc GetActiveCount (NonParamsRequest) returns (ActiveCountResponse) {
+        option (google.api.http) = {
+            get: "/v1/api/activeCount"
+        };
+    }
+
+    // get pending transactions size
+    rpc GetPendingTransactionsSize (NonParamsRequest) returns (PendingTransactionsSize) {
+        option (google.api.http) = {
+            get: "/v1/api/GetPendingTransactionsSize"
+        };
+    }
+
+
+    // get pending transactions
+    rpc GetPendingTransactions (NonParamsRequest) returns (PendingTransaction) {
+        option (google.api.http) = {
+            get: "/v1/api/GetPendingTransactions"
+        };
+    }
+
+
+    // get contract authorization information
+    rpc GetContractAuthorization(GetContractAuthorizationRequest) returns (GetContractAuthorizationResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/GetContractAuthorization"
+            body: "*"
+        };
+    }
+
+    rpc GetContractFunctions(GetContractFunctionsRequest) returns (GetContractFunctionsResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/GetContractFunctions"
+            body: "*"
+        };
+    }
+
+    rpc GetAccountContracts(GetAccountContractsRequest) returns (GetAccountContractsResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/GetAccountContracts"
+            body: "*"
+        };
+    }
+
+    // get creditIndex by address
+//    rpc GetCreditIndex (Address) returns (CreditIndexResponse) {
+//        option (google.api.http) = {
+//            post: "/v1/api/account/creditIndex"
+//            body:"*"
+//        };
+//    }
+
+    // Subscribe message
+    rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse) {
+        option (google.api.http) = {
+            post: "/v1/api/subscribe"
+            body: "*"
+        };
+    }
+
+}
+
+// Request message of Subscribe rpc
+message SubscribeRequest {
+    repeated string topics = 1;
+}
+
+// Request message of Subscribe rpc
+message SubscribeResponse {
+    string topic = 1;
+    string data = 2;
+}
+
+// Response message of GetGtState rpc.
+message GetChainStateResponse {
+    // Block chain id
+    uint32 chain_id = 1;
+    // Current gt tail hash
+    string tail = 2;
+    // Current gt fixed hash
+    string fixed = 3;
+    // Current gt tail block height
+    uint64 height = 4;
+    // The current gt protocol version.
+    string protocol_version = 5;
+    // The peer sync status.
+    bool synchronized = 6;
+    // gt version
+    string version = 7;
+}
+
+// Response message of GetAccount rpc.
+message AccountInfo {
+    string address = 1;
+    string balance = 2;
+    string frozen_fund = 3;
+    string pledge_fund = 4;
+    uint64 nonce = 5;
+    string variables_hash = 6;
+    string credit_index = 7;
+    repeated Permission permissions = 8;
+    int32 state = 9;
+}
+
+message Permission {
+    string auth_category = 1;
+    repeated string auth_message = 2;
+}
+
+// Response message of Call rpc.
+message CallResponse {
+    // result of smart contract method call.
+    string result = 1;
+
+    //execute error
+    string execute_err = 2;
+
+    //estimate gas used
+    string estimate_gas = 3;
+}
+
+// Response message of EstimateGas rpc.
+message GasResponse {
+    string gas = 1;
+    string err = 2;
+}
+
+// Request message of SendRawTransactionRequest rpc.
+message SendRawTransactionRequest {
+    // Signed data of transaction
+    bytes data = 1;
+}
+
+message BlockHashAndFull {
+    string hash = 1;
+    bool full_fill_transaction = 2;
+}
+
+// Response message of TransactionReceipt.
+message TransactionReceipt {
+    //hex tx hash
+    string hash = 1;
+    //id of the chain
+    uint32 chain_id = 2;
+    //The height of the block where the tx is
+    uint64 block_height = 3;
+    //Base58 string of the sender account addresss.
+    string from = 4;
+    //Base58 string of the receiver account addresss.
+    string to = 5;
+    //Amount of value sending with this transaction.
+    string value = 6;
+    //Transaction nonce.
+    uint64 nonce = 7;
+    //timestamp
+    int64 timestamp = 8;
+    //tx tpye
+    string type = 9;
+    //hex data
+    string data = 10;
+    //transaction memo
+    string memo = 11;
+    //tx priority
+    uint32 priority = 12;
+    //gas limit
+    string gas_limit = 13;
+    //tx status {1:SUCCESS、0：FAILED,2 PENDING}
+    uint32 status = 14;
+    // transaction gas used
+    string gas_used = 15;
+    //contract execute error
+    string execute_error = 16;
+    // contract execute result
+    string execute_result = 17;
+    //The contract address created, if the transaction was a contract creation, otherwise null.
+    string contract_address = 18;
+    //election result, if the transaction was a pledge transaction, otherwise null.
+    string election_result = 19;
+}
+
+// Request message of GetBestBlockByHeight rpc.
+message BlockHeightAndFull {
+    uint64 height = 1;
+    bool full_fill_transaction = 2;
+}
+
+// Request message of GetTransactionByContractAddress rpc.
+message ContractAddressRequest {
+    string contract_address = 1;
+}
+
+// Response message of GetBestBlockHash rpc.
+message BlockHash {
+    string hash = 1;
+}
+
+// Response message of GetMaxHeight rpc.
+message BlockHeight {
+    uint64 height = 1;
+}
+
+// Response message of GetAsset rpc.
+message AssetResponse {
+    string balance = 1;
+    string frozen_fund = 2;
+    string pledge_fund = 3;
+}
+
+// Response message of GetActiveCount rpc.
+message ActiveCountResponse {
+    uint32 active_count = 1;
+}
+
+// Response message of GetPendingTransactionsSize rpc.
+message PendingTransactionsSize {
+    uint64 size = 1;
+}
+
+// Response message of GetPendingTransactions rpc.
+message PendingTransaction {
+    repeated Transaction txs = 1;
+}
+
+message Transaction {
+    //hex tx hash
+    string hash = 1;
+    //id of the chain
+    uint32 chain_id = 2;
+    //Base58 string of the sender account addresss.
+    string from = 3;
+    //Base58 string of the receiver account addresss.
+    string to = 4;
+    //Amount of value sending with this transaction.
+    string value = 5;
+    //Transaction nonce.
+    uint64 nonce = 6;
+    //tx tpye
+    string type = 7;
+    //hex data
+    string data = 8;
+    //tx priority
+    uint32 priority = 9;
+    //transaction memo
+    string memo = 10;
+    //gas limit
+    string gas_limit = 11;
+    //timestamp
+    int64 timestamp = 12;
+    //signature of the from address
+    string signature = 13;
+}
+
+
+message GetContractAuthorizationRequest {
+    string address = 1;
+    string contract = 2;
+}
+
+
+message GetContractAuthorizationResponse {
+    repeated Authorization authorizations = 1;
+}
+
+message Authorization {
+    string type = 1;
+    string function = 2;
+    string rule = 3;
+}
+
+message GetContractFunctionsRequest {
+    string contract = 1;
+}
+
+message GetContractFunctionsResponse {
+    repeated string functions = 1;
+}
+
+message GetAccountContractsRequest {
+    string address = 1;
+}
+
+message GetAccountContractsResponse {
+    repeated string contracts = 1;
+}
+
+
+// Request message of GetBestBlockByHeight rpc.
+message GetTransactionsRequest {
+    string address = 1;
+    uint64 index = 2;
+    uint64 count = 3;
+    bool full_fill_transaction = 4;
+}
+
+message GetTransactionsResponse {
+    string address = 1;
+    repeated TransactionReceipt txs = 11;
+}
+
+
+message BlockListResponse {
+    repeated BlockResponse blocks = 1;
+}
+message BlockResponse {
+    uint32 chain_id = 1;
+    string hash = 2;
+    bool best_block = 3;
+    string coinbase = 4;
+    string state_root = 5;
+    string txs_root = 6;
+    string parent_hash = 7;
+    uint64 height = 8;
+    int64 timestamp = 9;
+    BlockMemo memo = 10;
+    repeated TransactionReceipt txs = 11;
+}
+message BlockMemo {
+    repeated BlockFundEntity rewards = 1;
+    repeated BlockFundEntity pledge = 2;
+}
+message BlockFundEntity {
+    string    address = 1;
+    string    balance = 2;
+    string    frozen_fund = 3;
+    string    pledge_fund = 4;
+}
+message CreditIndexResponse {
+    string credit_index = 1;
+}

@@ -1,0 +1,420 @@
+// Copyright (C) 2018 go-gt authors
+//
+// This file is part of the go-gt library.
+//
+// the go-gt library is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// the go-gt library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with the go-gt library.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+//The protobuf golang code is generated with protoc-gen-gogo v1.0.0
+
+syntax = "proto3";
+
+package rpcpb;
+
+import "google/api/annotations.proto";
+
+service AdminService {
+
+    // start mining
+    rpc StartMining (PassphraseRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/startMining"
+            body: "*"
+        };
+    }
+
+    // stop mining
+    rpc StopMining (NonParamsRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/stopMining"
+        };
+    }
+
+    // Accounts return account list.
+    rpc Accounts (NonParamsRequest) returns (AccountsResponse) {
+        option (google.api.http) = {
+            get: "/v1/admin/accounts"
+        };
+    }
+
+    // NewAccount create a new account with passphrase
+    rpc NewAccount (PassphraseRequest) returns (NewAccountResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/account/new"
+            body: "*"
+        };
+    }
+
+    // NewAccount create a new account with passphrase
+    rpc UpdateAccount (UpdateAccountRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/account/update"
+            body: "*"
+        };
+    }
+
+    // ImportAccount import a account with private key and passphrase
+    rpc ImportAccount (privKeyAndPassphrase) returns (Address) {
+        option (google.api.http) = {
+            post: "/v1/admin/account/import"
+            body: "*"
+        };
+    }
+
+    // ExportPrivateKey export account`s private key with  passphrase
+    rpc ExportPrivateKey (ExportPrivateKeyRequest) returns (PrivateKey) {
+        option (google.api.http) = {
+            post: "/v1/admin/account/exportPrivateKey"
+            body: "*"
+        };
+    }
+
+    // UnlockAccount unlock account with passphrase
+    rpc UnlockAccount (UnlockAccountRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/account/unlock"
+            body: "*"
+        };
+    }
+
+    // LockAccount lock account
+    rpc LockAccount (LockAccountRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/account/lock"
+            body: "*"
+        };
+    }
+
+    // Verify, sign, and send the transaction.
+    rpc SendTransaction (TransactionRequest) returns (TransactionHash) {
+        option (google.api.http) = {
+            post: "/v1/admin/sendTransaction"
+            body: "*"
+        };
+    }
+
+    // Sign sign msg
+    rpc Sign (SignHashRequest) returns (SignHashResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/sign/hash"
+            body: "*"
+        };
+    }
+
+    // Sign sign msg
+    rpc VerifyMessage (VerifyMessageRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/verifyMessage"
+            body: "*"
+        };
+    }
+
+    // Sign sign transaction
+    rpc SignTransactionWithPassphrase (SignTransactionPassphraseRequest) returns (SignTransactionPassphraseResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/sign"
+            body: "*"
+        };
+    }
+
+    // SendTransactionWithPassphrase send transaction with passphrase
+    rpc SendTransactionWithPassphrase (SendTransactionPassphraseRequest) returns (TransactionHash) {
+        option (google.api.http) = {
+            post: "/v1/admin/transactionWithPassphrase"
+            body: "*"
+        };
+    }
+
+    //return transaction
+    rpc Stop (NonParamsRequest) returns (BoolResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/stopServer"
+        };
+    }
+
+    // Return net version
+    rpc GetNetVersion (NonParamsRequest) returns (NetVersion) {
+        option (google.api.http) = {
+            get: "/v1/admin/netVersion"
+        };
+    }
+
+    // Return the p2p node info.
+    rpc NodeInfo (NonParamsRequest) returns (NodeInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/admin/nodeInfo"
+        };
+    }
+
+    //return Logging Info
+    rpc Logging (LoggingInfo) returns (LoggingInfo) {
+        option (google.api.http) = {
+            post: "/v1/admin/logging"
+            body: "*"
+        };
+    }
+
+    //Return the key pair
+    rpc GeneratePrivateKey (NonParamsRequest) returns (PrivateKey) {
+        option (google.api.http) = {
+            get: "/v1/admin/generatePrivateKey"
+        };
+    }
+}
+
+// Request message of non params.
+message NonParamsRequest {
+}
+
+message BoolResponse {
+    bool result = 1;
+}
+
+// Response message of Accounts rpc.
+message AccountsResponse {
+    // Account list
+    repeated string addresses = 1;
+}
+
+message PassphraseRequest {
+    string passphrase = 1;
+}
+
+message NewAccountResponse {
+    string address = 1;
+    string memo = 2;
+}
+
+message UpdateAccountRequest {
+    string address = 1;
+    string old_passphrase = 2;
+    string new_passphrase = 3;
+}
+
+message privKeyAndPassphrase {
+    string pri_key = 1;
+    string passphrase = 2;
+}
+
+message ExportPrivateKeyRequest {
+    string address = 1;
+    string passphrase = 2;
+}
+
+message Address {
+    string address = 1;
+}
+
+message UnlockAccountRequest {
+    string address = 1;
+    string passphrase = 2;
+    uint64 duration = 3;
+}
+
+message LockAccountRequest {
+    string address = 1;
+}
+
+// Request message of SendTransaction rpc.
+message TransactionRequest {
+    // Base58 string of the sender account addresss.
+    string from = 1;
+
+    // Base58 string of the receiver account addresss.
+    string to = 2;
+
+    // Amount of value sending with this transaction.
+    string value = 3; // uint128, len=16
+
+    // Transaction nonce.
+    uint64 nonce = 4;
+
+    // binary data for transaction
+    //hex encode
+    string data = 5;
+
+    // transaction payload type, enum:NormalTx, PledgeTx, ContractDeployTx, ContractInvokeTx,ContractChangeStateTx,AuthorizeTx
+    string type = 6;
+
+    uint32 priority = 7;
+
+    //transaction memo
+    string memo = 8;
+    //gasLimit sending with this transaction
+    string gas_limit = 9;
+
+    // contract sending with this transaction
+    ContractRequest contract = 10;
+
+    // contract authorize with this transaction
+    AuthorizeRequest authorize = 11;
+
+    // vote message with this transaction
+    VoteRequest vote = 12;
+}
+
+message ContractRequest {
+    // contract source code.
+    string source = 1;
+
+    // contract source type, support javascript and typescript
+    string source_type = 2;
+
+    // call contract function name
+    string function = 3;
+
+    // the params of contract.
+    string args = 4;
+
+    // deploy contract default auth flag
+    string auth_flag = 5;
+
+    // change contract state
+    int32 state = 6;
+}
+
+message AuthorizeRequest {
+    repeated AuthorizeCmd commands = 1;
+
+    string address = 2;
+
+    string type = 3;
+}
+
+message AuthorizeCmd {
+    string command = 1;
+
+    string func = 2;
+
+    string rule = 3;
+}
+
+message VoteRequest {
+    string vote_type = 1;
+}
+
+message TransactionHash {
+    // Hex string of transaction hash.
+    string hash = 1;
+}
+
+message SignHashRequest {
+
+    // sign address
+    string address = 1;
+    //hex string of hash
+    string message = 2;
+
+    // sign algorithm
+    uint32 alg = 3;
+}
+
+message SignHashResponse {
+    //hex string of the data
+    string data = 1;
+}
+
+message VerifyMessageRequest {
+    string address = 1;
+    //hex string of signature
+    string signature = 2;
+    //hex string of sign msg
+    string message = 3;
+}
+
+message SignTransactionPassphraseResponse {
+    bytes data = 1;
+}
+
+message SendTransactionPassphraseRequest {
+    // transaction struct
+    TransactionRequest transaction = 1;
+
+    // from account passphrase
+    string passphrase = 2;
+}
+
+message SignTransactionPassphraseRequest {
+    // transaction struct
+    TransactionRequest transaction = 1;
+
+    // from account passphrase
+    string passphrase = 2;
+}
+
+message NetVersion {
+    uint32 network_id = 1;
+    string client_version = 2;
+    string protocol_version = 3;
+    repeated string listen = 4;
+}
+
+message NodeInfoResponse {
+    //the id of the current node
+    string id = 1;
+    //coinbase address
+    string coinbase = 2;
+    //tail block height
+    uint64 tail_height = 3;
+    //confirm block height
+    uint64 confirm_height = 4;
+    //The id of the chain in which the node is located
+    uint32 chain_id = 5;
+    // the node synchronized status.
+    bool synchronized = 6;
+    // the node route table bucket size.
+    int32 bucket_size = 7;
+    //net version info
+    NetVersion net_version = 8;
+    //active count
+    uint32 active_count = 9;
+    //The peers to which this node is connected
+    repeated string peer_ids = 10;
+}
+
+message LoggingInfo {
+    string log_level = 1;
+    string log_path = 2;
+    uint32 rotation_time = 3;
+    uint32 log_age = 4;
+}
+
+message PrivateKey {
+    string pri_key = 1;
+}
+
+
+//message PprofRequest {
+//    string listen = 1;
+//}
+//
+//message PprofResponse {
+//    bool result = 1;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

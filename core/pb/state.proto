@@ -1,0 +1,39 @@
+syntax = "proto3";
+import "gt.pro/gtio/go-gt/core/pb/block.proto";
+package corepb;
+
+message Council {
+    CouncilMeta meta = 1;
+    repeated Panel panels = 2;
+    PeriodState state = 3;
+}
+
+message CouncilMeta {
+    uint32 chain_id = 1;
+    uint64 term_id = 2;
+    int64  timestamp = 3;
+    uint64 tenure_start_height = 4;
+    uint64 tenure_end_height = 5;
+    SystemConfig  config = 6;
+}
+
+message PeriodState {
+    uint64 normal_tx_cnt = 1;
+    uint64 contract_tx_cnt = 2;
+    uint64 participator_cnt = 3;
+}
+
+message Panel {
+    Member  leader = 1;
+    repeated Member members = 2;
+}
+
+message Member {
+    string peer_id = 1;
+    string address = 2;
+    bytes  pledge_fund = 3;
+}
+
+message GenesisCouncil {
+    repeated Member members =1;
+}
